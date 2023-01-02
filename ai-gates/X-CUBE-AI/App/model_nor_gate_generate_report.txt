@@ -1,0 +1,131 @@
+Neural Network Tools for STM32AI v1.6.0 (STM.ai v7.3.0-RC5)
+Created date          : 2022-12-22 15:53:46
+Parameters            : generate --name model_nor_gate -m C:/Users/pas41111/python/nor-gate.h5 --type keras --compression none --verbosity 1 --workspace C:\Users\pas41111\AppData\Local\Temp\mxAI_workspace2652168718774997292712232081247729 --output C:\Users\pas41111\.stm32cubemx\model_nor_gate_output --allocate-inputs --allocate-outputs
+
+Exec/report summary (generate)
+-------------------------------------------------------------------------------------------------------------
+model file         :   C:\Users\pas41111\python\nor-gate.h5                                                 
+type               :   keras                                                                                
+c_name             :   model_nor_gate                                                                       
+compression        :   none                                                                                 
+options            :   allocate-inputs, allocate-outputs                                                    
+optimization       :   balanced                                                                             
+target/series      :   generic                                                                              
+workspace dir      :   C:\Users\pas41111\AppData\Local\Temp\mxAI_workspace2652168718774997292712232081247729
+output dir         :   C:\Users\pas41111\.stm32cubemx\model_nor_gate_output                                 
+model_fmt          :   float                                                                                
+model_name         :   norgate                                                                              
+model_hash         :   42de298b082ebe6efeff8d9fbbe22afc                                                     
+params #           :   17 items (68 B)                                                                      
+-------------------------------------------------------------------------------------------------------------
+input 1/1          :   'input_2' (domain:activations/**default**)                                           
+                   :   2 items, 8 B, ai_float, float, (1,1,1,2)                                             
+output 1/1         :   'dense_5' (domain:activations/**default**)                                           
+                   :   1 items, 4 B, ai_float, float, (1,1,1,1)                                             
+macc               :   67                                                                                   
+weights (ro)       :   68 B (68 B) (1 segment)                                                              
+activations (rw)   :   24 B (24 B) (1 segment) *                                                            
+ram (total)        :   24 B (24 B) = 24 + 0 + 0                                                             
+-------------------------------------------------------------------------------------------------------------
+(*) 'input'/'output' buffers can be used from the activations buffer
+
+Model name - norgate ['input_2'] ['dense_5']
+------------------------------------------------------------------------------------------------------------------------------------------------
+id   layer (type,original)           oshape         param/size   macc   connected to    |   c_size   c_macc         c_type                     
+------------------------------------------------------------------------------------------------------------------------------------------------
+0    input_2 (Input, InputLayer)     [b:None,c:2]                                       |                          
+------------------------------------------------------------------------------------------------------------------------------------------------
+1    dense_4_dense (Dense, Dense)    [b:None,c:4]   12/48        12     input_2         |            +40(+333.3%)   dense_of32/nl_of32[0, 1]   
+     dense_4 (Nonlinearity, Dense)   [b:None,c:4]                40     dense_4_dense   |            -40(-100.0%)  
+------------------------------------------------------------------------------------------------------------------------------------------------
+2    dense_5_dense (Dense, Dense)    [b:None,c:1]   5/20         5      dense_4         |            +10(+200.0%)   dense_of32/nl_of32[o][2, 3]
+     dense_5 (Nonlinearity, Dense)   [b:None,c:1]                10     dense_5_dense   |            -10(-100.0%)  
+------------------------------------------------------------------------------------------------------------------------------------------------
+model/c-model: macc=67/67  weights=68/68  activations=--/24 io=--/0
+
+
+
+Generated C-graph summary
+------------------------------------------------------------------------------------------------------------------------
+model name            : norgate
+c-name                : model_nor_gate
+c-node #              : 4
+c-array #             : 9
+activations size      : 24 (1 segment)
+weights size          : 68 (1 segment)
+macc                  : 67
+inputs                : ['input_2_output']
+outputs               : ['dense_5_output']
+
+C-Arrays (9)
+-----------------------------------------------------------------------------------------------------
+c_id   name (*_array)          item/size   domain/mem-pool           c-type        fmt       comment
+-----------------------------------------------------------------------------------------------------
+0      dense_4_dense_output    4/16        activations/**default**   float         float32          
+1      dense_4_output          4/16        activations/**default**   float         float32          
+2      dense_5_dense_output    1/4         activations/**default**   float         float32          
+3      dense_5_output          1/4         activations/**default**   float         float32   /output
+4      dense_4_dense_weights   8/32        weights/weights           const float   float32          
+5      dense_4_dense_bias      4/16        weights/weights           const float   float32          
+6      dense_5_dense_weights   4/16        weights/weights           const float   float32          
+7      dense_5_dense_bias      1/4         weights/weights           const float   float32          
+8      input_2_output          2/8         activations/**default**   float         float32   /input 
+-----------------------------------------------------------------------------------------------------
+
+C-Layers (4)
+---------------------------------------------------------------------------------------------------
+c_id   name (*_layer)   id   layer_type   macc   rom   tensors                    shape (array id)
+---------------------------------------------------------------------------------------------------
+0      dense_4_dense    1    dense        12     48    I: input_2_output          (1,1,1,2) (8)   
+                                                       W: dense_4_dense_weights   (2,1,1,4) (4)   
+                                                       W: dense_4_dense_bias      (1,1,1,4) (5)   
+                                                       O: dense_4_dense_output    (1,1,1,4) (0)   
+---------------------------------------------------------------------------------------------------
+1      dense_4          1    nl           40     0     I: dense_4_dense_output    (1,1,1,4) (0)   
+                                                       O: dense_4_output          (1,1,1,4) (1)   
+---------------------------------------------------------------------------------------------------
+2      dense_5_dense    2    dense        5      20    I: dense_4_output          (1,1,1,4) (1)   
+                                                       W: dense_5_dense_weights   (4,1,1,1) (6)   
+                                                       W: dense_5_dense_bias      (1,1,1,1) (7)   
+                                                       O: dense_5_dense_output    (1,1,1,1) (2)   
+---------------------------------------------------------------------------------------------------
+3      dense_5          2    nl           10     0     I: dense_5_dense_output    (1,1,1,1) (2)   
+                                                       O: dense_5_output          (1,1,1,1) (3)   
+---------------------------------------------------------------------------------------------------
+
+
+
+Number of operations per c-layer
+------------------------------------------------------------------------------------------------
+c_id    m_id   name (type)             #op (type)                       #param (sparsity)      
+------------------------------------------------------------------------------------------------
+0       1      dense_4_dense (dense)                12 (smul_f32_f32)               12 (0.0000)
+1       1      dense_4 (nl)                         40 (op_f32_f32)                            
+2       2      dense_5_dense (dense)                 5 (smul_f32_f32)                5 (0.0000)
+3       2      dense_5 (nl)                         10 (op_f32_f32)                            
+------------------------------------------------------------------------------------------------
+total                                               67                              17 (0.0000)
+
+  Number of operation types
+  ---------------------------------------------
+  smul_f32_f32                  17       25.4%
+  op_f32_f32                    50       74.6%
+
+Complexity report (model)
+----------------------------------------------------------------------------------
+m_id   name            c_macc                    c_rom                     c_id  
+----------------------------------------------------------------------------------
+1      dense_4_dense   ||||||||||||||||  77.6%   ||||||||||||||||  70.6%   [0, 1]
+2      dense_5_dense   |||||             22.4%   |||||||           29.4%   [2, 3]
+----------------------------------------------------------------------------------
+macc=67 weights=68 act=24 ram_io=0
+
+Generated files (7)
+-------------------------------------------------------------------------------------------
+C:\Users\pas41111\.stm32cubemx\model_nor_gate_output\model_nor_gate_config.h
+C:\Users\pas41111\.stm32cubemx\model_nor_gate_output\model_nor_gate.h
+C:\Users\pas41111\.stm32cubemx\model_nor_gate_output\model_nor_gate.c
+C:\Users\pas41111\.stm32cubemx\model_nor_gate_output\model_nor_gate_data_params.h
+C:\Users\pas41111\.stm32cubemx\model_nor_gate_output\model_nor_gate_data_params.c
+C:\Users\pas41111\.stm32cubemx\model_nor_gate_output\model_nor_gate_data.h
+C:\Users\pas41111\.stm32cubemx\model_nor_gate_output\model_nor_gate_data.c
