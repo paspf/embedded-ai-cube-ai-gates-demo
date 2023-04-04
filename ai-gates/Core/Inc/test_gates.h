@@ -3,7 +3,7 @@
   * @file           : test_gates.c
   * @brief          : Test neural networks, trained to represent digital gates.
   * @author			: paspf
-  * @date			: 2022-12-22
+  * @date			: 2023-03-26
   * @copyright		: paspf, GNU General Public License v3.0
   ******************************************************************************
   */

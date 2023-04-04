@@ -6,7 +6,7 @@
   * 				  Program to test the usage of CubeAI on a STM32-L476RG as
   * 				  stand-alone application.
   * @author			: paspf
-  * @date			: 2022-12-22
+  * @date			: 2023-03-24
   * @copyright		: paspf, GNU General Public License v3.0
   ******************************************************************************
   */
